@@ -3,13 +3,12 @@ machine:
     - docker
 
 dependencies:
+  cache_directories:
+    - "~/docker"
   override:
-    - true
+    - docker info
 
 test:
   override:
     - true
-  post:
-    - VERSION=${CIRCLE_SHA1} ./build.sh
-    - mv openresty:${CIRCLE_SHA1}.tar.gz ${CIRCLE_ARTIFACTS}
-
+  
