@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 2)
+
+export WORKERS=${WORKERS:-$NPROC}
+export CONNECTIONS=${CONNECTIONS:-8192}
+export TMPDIR=${TMPDIR:/tmp}
+export NOFILE=${NOFILE:-$(expr $CONNECTIONS \* 2)}
+
+export TMPDIR=${TMPDIR}/api-proxy
+mkdir $TMPDIR
+
+/usr/local/bin/ep -d nginx.conf 2>&1 | sed '1d'
+
