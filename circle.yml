@@ -5,3 +5,6 @@ machine:
 test:
   override:
     - /bin/true
+  post:
+    - VERSION=${CIRCLE_SHA1} ./build.sh
+
