@@ -1,18 +1,17 @@
 machine:
-#  services:
-#    - docker
   pre:
     - sudo service docker stop && sudo curl -L -o /usr/bin/docker
       'http://s3-external-1.amazonaws.com/circle-downloads/docker-1.6.2-circleci'
-      && sudo chmod 0755 /usr/bin/docker && sudo service docker start
+      && sudo chmod 0755
+  post:
+    - ./docker:
+         background: true
+    - sleep 5
 
 dependencies:
-  cache_directories:
-    - "~/docker"
   override:
     - docker info
 
 test:
   override:
-    - true
-  
+    - /bin/true
